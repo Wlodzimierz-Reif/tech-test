@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import styles from "./App.module.scss";
-import Button from "./components/Button";
+import Btn from "./components/Btn";
 import InputField from "./components/InputField";
 import Dropdown from "./components/Dropdown";
 import { useState } from "react";
@@ -32,10 +32,14 @@ function App() {
       } else {
         return movies.Search.map((movie) => (
           <>
-            <p>{movie.Title}</p>
-            <button onClick={() => getMovie(movie.imdbID)}>
-              Get more info
-            </button>
+            <div>
+              <p className={styles.title}>{movie.Title}</p>
+              <Btn
+                handleClick={() => getMovie(movie.imdbID)}
+                text="More info"
+                variant="info"
+              />
+            </div>
           </>
         ));
       }
@@ -77,6 +81,7 @@ function App() {
 
   const printMovie = () => {
     if (movie) {
+      window.scrollTo(0, 0);
       return (
         <>
           <p>Title: {movie.Title}</p>
@@ -92,7 +97,7 @@ function App() {
           <p>Language: {movie.Language}</p>
           <p>Country: {movie.Country}</p>
           <p>Awards: {movie.Awards}</p>
-          <p>Ratings:</p>
+          {/* <p>Ratings:</p>
           <p>
             {movie.Ratings[0].Source}: {movie.Ratings[0].Value}
           </p>
@@ -101,7 +106,7 @@ function App() {
           </p>
           <p>
             {movie.Ratings[2].Source}: {movie.Ratings[2].Value}
-          </p>
+          </p> */}
           <p>Metascore: {movie.Metascore}</p>
           <p>imdbRating: {movie.imdbRating}</p>
           <p>imdbVotes: {movie.imdbVotes}</p>
@@ -142,7 +147,7 @@ function App() {
     <>
       {makeYears()}
       <InputField handleInput={(value) => updateItem(value)} />
-      <Button handleClick={callApi} />
+      <Btn handleClick={callApi} text="Search" type="primary" size="sm" />
       <Dropdown years={years} handleInput={(value) => updateYear(value)} />
       {printMovie()}
       {print()}
